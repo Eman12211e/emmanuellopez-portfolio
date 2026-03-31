@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EMMANUEL L | PHANTOM THIEF PORTFOLIO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Press+Start+2P&display=swap');
+
+    :root {
+      --p5-red: #eb0000;
+      --p5-black: #111111;
+      --p5-white: #f0f0f0;
+    }
+
+    /* P5 Jitter — only on hover, steps for snappy P5 feel */
+    @keyframes p5-jitter {
+      0% { transform: translate(0,0); }
+      20% { transform: translate(-2px, 1px) rotate(-1deg); }
+      40% { transform: translate(2px, -1px) rotate(1deg); }
+      60% { transform: translate(-1px, -2px) rotate(-0.5deg); }
+      80% { transform: translate(2px, 2px) rotate(0.5deg); }
+      100% { transform: translate(0,0); }
+    }
+    .p5-jitter { animation: p5-jitter 0.2s steps(2) infinite; }
+    .p5-jitter-hover { animation: none; }
+    .p5-jitter-hover:hover { animation: p5-jitter 0.2s steps(2) infinite; }
+
+    /* Ransom Note Typography (P5 style) */
+    .ransom span {
+      display: inline-block;
+      background: #000;
+      color: #fff;
+      padding: 4px 8px;
+      margin: 0 3px;
+      font-family: 'Creepster', system-ui;
+      transform: rotate(calc(-6deg + (12deg * var(--r))));
+    }
+
+    /* P5 Menu Item (jagged, slanted, high-contrast) */
+    .p5-menu-item {
+      clip-path: polygon(8% 0%, 100% 10%, 95% 100%, 0% 90%);
+      background: rgba(17, 17, 17, 0.95);
+      border: 5px solid var(--p5-red);
+      box-shadow: 0 0 0 8px #000, 12px 12px 0 #000;
+      transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .p5-menu-item:hover {
+      background: var(--p5-red);
+      color: #000;
+      transform: scale(1.05);
+      animation: p5-jitter 0.2s steps(2) infinite;
+    }
+
+    /* Halftone overlay for P5 feel */
+    .halftone {
+      background-image:
+        radial-gradient(circle at 30% 30%, #000 18%, transparent 20%),
+        radial-gradient(circle at 70% 70%, #000 18%, transparent 20%);
+      background-size: 10px 10px;
+      opacity: 0.12;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .p5-jitter, .p5-jitter-hover:hover, .p5-menu-item:hover { animation: none; }
+      .p5-cut-in { transition: none; }
+    }
+  </style>
+</head>
+<body class="bg-black text-white font-mono overflow-x-hidden">
+
+  <!-- P5 SVG FILTER -->
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="p3r-ripple" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence id="turb" type="fractalNoise" baseFrequency="0.05" numOctaves="4" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <!-- ====================== MENU SCREEN (Persona 5 Royal style) ====================== -->
+  <div id="menu-screen" class="min-h-screen flex relative">
+
+    <!-- P5-style background shapes / streaks -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <!-- Diagonal red streaks like P5 menu -->
+      <div class="absolute top-0 right-0 w-[60%] h-full bg-[#1a0000] skew-x-[-8deg] translate-x-[10%]"></div>
+      <div class="absolute top-[10%] right-[5%] w-[3px] h-[80%] bg-[#eb0000]/40 skew-x-[-5deg]"></div>
+      <div class="absolute top-[5%] right-[15%] w-[2px] h-[90%] bg-[#eb0000]/20 skew-x-[-5deg]"></div>
+      <div class="absolute top-[15%] right-[25%] w-[1px] h-[70%] bg-[#eb0000]/15 skew-x-[-5deg]"></div>
+    </div>
+
+    <!-- Left side: P5 Royal vertical menu -->
+    <div class="w-[45%] md:w-[40%] flex items-center justify-center z-20 px-4 md:px-12">
+      <div class="w-full max-w-md">
+        <div class="space-y-6">
+          <!-- PROJECTS -->
+          <div onclick="navigateTo('projects')"
+               class="p5-menu-item px-6 md:px-10 py-6 md:py-8 text-2xl md:text-4xl font-black cursor-pointer flex items-center justify-between group">
+            <span class="ransom text-2xl md:text-4xl"><span>P</span><span>R</span><span>O</span><span>J</span><span>E</span><span>C</span><span>T</span><span>S</span></span>
+            <span class="text-[#eb0000] text-4xl md:text-6xl group-hover:rotate-12 transition-transform">&rarr;</span>
+          </div>
+
+          <!-- GITHUB -->
+          <div onclick="navigateTo('github')"
+               class="p5-menu-item px-6 md:px-10 py-6 md:py-8 text-2xl md:text-4xl font-black cursor-pointer flex items-center justify-between group">
+            <span class="ransom text-2xl md:text-4xl"><span>G</span><span>I</span><span>T</span><span>H</span><span>U</span><span>B</span></span>
+            <span class="text-[#eb0000] text-4xl md:text-6xl group-hover:rotate-12 transition-transform">&rarr;</span>
+          </div>
+
+          <!-- LINKEDIN -->
+          <div onclick="navigateTo('linkedin')"
+               class="p5-menu-item px-6 md:px-10 py-6 md:py-8 text-2xl md:text-4xl font-black cursor-pointer flex items-center justify-between group">
+            <span class="ransom text-2xl md:text-4xl"><span>L</span><span>I</span><span>N</span><span>K</span><span>E</span><span>D</span><span>I</span><span>N</span></span>
+            <span class="text-[#eb0000] text-4xl md:text-6xl group-hover:rotate-12 transition-transform">&rarr;</span>
+          </div>
+
+          <!-- EMAIL -->
+          <div onclick="navigateTo('email')"
+               class="p5-menu-item px-6 md:px-10 py-6 md:py-8 text-2xl md:text-4xl font-black cursor-pointer flex items-center justify-between group">
+            <span class="ransom text-2xl md:text-4xl"><span>E</span><span>M</span><span>A</span><span>I</span><span>L</span></span>
+            <span class="text-[#eb0000] text-4xl md:text-6xl group-hover:rotate-12 transition-transform">&rarr;</span>
+          </div>
+
+          <!-- ABOUT ME -->
+          <div onclick="navigateTo('about')"
+               class="p5-menu-item px-6 md:px-10 py-6 md:py-8 text-2xl md:text-4xl font-black cursor-pointer flex items-center justify-between group">
+            <span class="ransom text-2xl md:text-4xl"><span>A</span><span>B</span><span>O</span><span>U</span><span>T</span><span>&nbsp;</span><span>M</span><span>E</span></span>
+            <span class="text-[#eb0000] text-4xl md:text-6xl group-hover:rotate-12 transition-transform">&rarr;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right side: Character (large, like Joker in P5 Royal menu) -->
+    <div class="w-[55%] md:w-[60%] hidden md:flex items-end justify-center z-10 relative overflow-hidden">
+      <img src="images/mitsuru-p3r.jpg"
+           alt="Mitsuru Kirijo"
+           class="max-h-[95vh] object-contain drop-shadow-[0_0_40px_rgba(235,0,0,0.4)] relative z-10"
+           style="margin-bottom: -2%; margin-right: -5%;">
+      <!-- Red glow behind character -->
+      <div class="absolute bottom-0 right-[10%] w-[70%] h-[60%] bg-[radial-gradient(ellipse_at_center,#eb000030_0%,transparent_70%)]"></div>
+    </div>
+
+    <!-- Halftone overlay -->
+    <div class="halftone absolute inset-0 pointer-events-none z-30"></div>
+  </div>
+
+  <!-- ====================== PROJECTS PAGE ====================== -->
+  <div id="projects-screen" class="hidden min-h-screen py-20 px-4 md:px-8 bg-[#111] relative">
+    <button onclick="backToMenu()"
+            class="absolute top-8 left-4 md:left-8 px-6 md:px-8 py-3 md:py-4 text-xl md:text-2xl border-4 border-[#eb0000] bg-black hover:bg-[#eb0000] hover:text-black transition-all">
+      &larr; BACK TO MENU
+    </button>
+
+    <div class="max-w-6xl mx-auto pt-16">
+      <h1 class="text-5xl md:text-7xl text-center mb-16 ransom">PROJECTS IN THE WORKS</h1>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="p5-menu-item p-8 hover:border-white text-center">
+          <div class="text-2xl md:text-3xl mb-4 font-black">PROJECT ALPHA</div>
+          <p class="text-cyan-300">Kinetic UI system with displacement mapping</p>
+        </div>
+        <div class="p5-menu-item p-8 hover:border-white text-center">
+          <div class="text-2xl md:text-3xl mb-4 font-black">PROJECT BETA</div>
+          <p class="text-cyan-300">Phantom Thief branding &amp; motion system</p>
+        </div>
+        <div class="p5-menu-item p-8 hover:border-white text-center">
+          <div class="text-2xl md:text-3xl mb-4 font-black">PROJECT OMEGA</div>
+          <p class="text-cyan-300">Deep-sea portfolio engine (P3R &times; P5 fusion)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================== ABOUT ME PAGE ====================== -->
+  <div id="about-screen" class="hidden min-h-screen py-20 px-4 md:px-8 bg-black/90 relative">
+    <button onclick="backToMenu()"
+            class="absolute top-8 left-4 md:left-8 px-6 md:px-8 py-3 md:py-4 text-xl md:text-2xl border-4 border-[#eb0000] bg-black hover:bg-[#eb0000] hover:text-black transition-all">
+      &larr; BACK TO MENU
+    </button>
+
+    <div class="max-w-4xl mx-auto pt-16">
+      <h1 class="text-5xl md:text-7xl text-center mb-12 ransom">ABOUT ME</h1>
+
+      <div id="todo-list" class="space-y-6"></div>
+
+      <div class="mt-12 flex gap-4 max-w-lg mx-auto">
+        <input id="new-task" type="text" placeholder="New daily quest..."
+               class="flex-1 bg-transparent border-4 border-[#eb0000] text-white px-4 md:px-6 py-4 md:py-5 text-xl md:text-2xl focus:outline-none focus:border-white"
+               onkeydown="if(event.key==='Enter')addTask()">
+        <button onclick="addTask()"
+                class="px-6 md:px-10 bg-[#eb0000] border-4 border-white hover:scale-110 transition-transform text-lg md:text-xl">ADD</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // Random ransom rotation
+    function randomizeRansom() {
+      document.querySelectorAll('.ransom span').forEach(span => {
+        span.style.setProperty('--r', (Math.random()).toFixed(2));
+      });
+    }
+
+    // To-Do List (scrapbook style)
+    let tasks = [
+      { id: 1, text: "Master P5 Royal menu styling", completed: true },
+      { id: 2, text: "Build kinetic UI portfolio", completed: false },
+      { id: 3, text: "Add All-Out Attack transitions", completed: false }
+    ];
+
+    function renderTodo() {
+      const container = document.getElementById('todo-list');
+      if (!container) return;
+      container.innerHTML = '';
+      tasks.forEach(task => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-4 md:gap-6 bg-[#111] p-5 md:p-8 text-xl md:text-3xl cursor-pointer border-6 border-white shadow-[12px_12px_0_#000]';
+        div.style.transform = `rotate(${(Math.random() * 6 - 3).toFixed(1)}deg)`;
+        div.style.borderWidth = '6px';
+        div.innerHTML = `
+          <div onclick="toggleComplete(${task.id}); event.stopImmediatePropagation()" class="w-10 h-10 md:w-14 md:h-14 border-4 border-[#eb0000] flex-shrink-0 relative flex items-center justify-center text-3xl md:text-5xl hover:border-white transition-colors">
+            ${task.completed ? '<span class="text-[#eb0000] rotate-45 text-4xl md:text-6xl leading-none">/</span>' : ''}
+          </div>
+          <span class="flex-1 ${task.completed ? 'line-through opacity-50' : ''}">${task.text}</span>
+          <button onclick="deleteTask(${task.id}); event.stopImmediatePropagation()" class="text-[#eb0000] text-4xl md:text-5xl leading-none hover:scale-125 transition-transform">&times;</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleComplete(id) {
+      tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+      renderTodo();
+    }
+
+    function addTask() {
+      const input = document.getElementById('new-task');
+      if (!input.value.trim()) return;
+      tasks.unshift({ id: Date.now(), text: input.value, completed: false });
+      input.value = '';
+      renderTodo();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      renderTodo();
+    }
+
+    // Screen switching
+    function showScreen(screenId) {
+      document.querySelectorAll('#menu-screen, #projects-screen, #about-screen').forEach(s => s.classList.add('hidden'));
+      const target = document.getElementById(screenId);
+      if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function navigateTo(target) {
+      if (target === 'projects') {
+        showScreen('projects-screen');
+      } else if (target === 'about') {
+        showScreen('about-screen');
+        renderTodo();
+      } else if (target === 'github') {
+        window.open('https://github.com/Eman12211e?tab=repositories', '_blank');
+      } else if (target === 'linkedin') {
+        window.open('https://www.linkedin.com/in/emmanuel-l-271623219/', '_blank');
+      } else if (target === 'email') {
+        window.location.href = 'mailto:your@email.com';
+      }
+    }
+
+    function backToMenu() {
+      showScreen('menu-screen');
+    }
+
+    // Initialize
+    window.onload = () => {
+      renderTodo();
+      randomizeRansom();
+
+      // Subtle ripple settle on load
+      const turb = document.getElementById('turb');
+      let freq = 0.06;
+      const rippleInterval = setInterval(() => {
+        freq = Math.max(0.008, freq - 0.004);
+        turb.setAttribute('baseFrequency', freq.toFixed(3));
+        if (freq <= 0.01) clearInterval(rippleInterval);
+      }, 40);
+    };
+  </script>
+</body>
+</html>
